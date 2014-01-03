@@ -1,0 +1,88 @@
+<!-- START POST-->
+<section id="posts">
+	{% if article.content contains "<img" %}
+	    {% assign src = article.content | split: 'src="' %}
+	    {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn'; | replace: 'http:http://';, 'http://'; | remove: 'https:' %}
+	{% endif %}
+	<div class="sixteen columns">
+		<a style="color:#444;font-weight:700;" href="/">home ></a>
+		<a href="{{ blog.url }}" style="color:#444;font-weight:700;"> blog > {{ blog.handle }}</a> <br> <br>
+	</div>
+	<article >
+		<div class="sixteen columns">
+			<h3 class="border bottom" style="font-size:400%; max-width:960px; font-weight:700; text-transform:uppercase">{{ article.title | escape }}</h3>
+		</div>
+		<div class="eight columns info-bar">
+			<img src=" {{ 'evan.png' | asset_url }}" alt="" id="writer">
+			<h4 style="display: inline; position:relative; bottom: 1.6em;">Posted by {{ article.author }} on {{ article.published_at | date: "%B %d, %Y" }}. <a href="#comments" class="nomobile">{{ article.comments_count }} {{ article.comments_count | pluralize: 'Comment', 'Comments' }}</a></h4>
+		</div>
+		<div class="eight columns info-bar">
+			{% include 'social-sharing' %}
+		</div>
+		<div class="wysiwygten columns sixteen border top" id="test-article">
+			{{ article.content }}
+			<div id="all-articles" class="thin-border bottom ">
+				<a href="{{ blog.url }}">&laquo; All Articles</a>
+			</div>
+		</div>
+	</article>
+ 	<br>
+ 	<div class="sixteen columns">
+ 		
+ 	</div>
+</section>
+<!-- END POST-->
+{% if blog.comments_enabled? or article.comments.size > 0 %}
+<!-- START COMMENTS-->
+<a id="comments"></a>
+<section id="comments" class="eleven columns">
+	<h3>Comments</h3>
+
+	{% if article.comments.size == 0 %}
+	<p><em>There are no comments</em></p>
+	{% else %}
+		{% for comment in article.comments %}
+		<article>
+			<div class="comment">
+				{{ comment.content | strip_html }}
+				<span class="bubble">&#9660;</span>
+			</div>
+			<span class="author">Posted by {{ comment.author }} on {{ comment.created_at | date: "%B %d, %Y" }}</span>
+		</article>
+		{% endfor %}
+	{% endif %}
+	{% if blog.comments_enabled? %}
+	<h3 class="post-comment">Post Comment</h3>
+	<div class="comment_wrapper">{% if comment and comment.created_at %}
+		  <p class="success">
+		    {% if blog.moderated? %}
+		    <em>Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.</em>
+		    {% else %}
+		    <em>Your comment was posted successfully! Thank you!</em>
+		    {% endif %}
+		  </p>
+		  {% endif %}
+		{% form article %}
+			{% if form.errors %}
+			  <div class="error">
+			    <p>Please correct these errors:</p>
+			 	<p>
+			    {% for field in form.errors %}
+			    <em>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</em>{% unless forloop.last %}<br>{% endunless %}
+			    {% endfor %}
+				</p>
+			  </div>
+			  {% endif %}
+			<input type="text" id="comment_author" name="comment[author]" placeholder="Your Name" class="required {% if form.errors contains "author" %}error{% endif %}" />
+			<input type="email" id="comment_email" name="comment[email]"  placeholder="Your Email" class="required email {% if form.errors contains "email" %}error{% endif %}" />
+			<textarea id="comment_body" name="comment[body]" cols="" rows="" placeholder="Your Comment" class="required {% if form.errors contains "body" %} error{% endif %}" >{{ form.body }}</textarea>
+			<input type="submit" value="Post Comment" class="button secondary">
+		{% endform %}
+		{% endif %}</div>
+</section>
+<!-- END COMMENTS-->
+{% else %}
+	<section id="comments">
+		<p><em>Comments are closed for this article.</em></p>
+	</section>
+{% endif %}

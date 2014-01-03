@@ -1,0 +1,8 @@
+{% if shop.customer_accounts_enabled %}
+  {% if customer %}
+    <li>{{ settings.customer_account_link_text | link_to: '/account' }}</li>
+    <li>{{ settings.customer_logout_link_text | customer_logout_link }}</li>
+  {% else %}
+    <li>{{ settings.customer_login_link_text | customer_login_link }}</li>
+  {% endif %}
+{% endif %}

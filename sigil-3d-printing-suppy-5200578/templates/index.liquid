@@ -1,0 +1,111 @@
+<div class="ten columns">
+	<h2>
+	Welcome to Arcade 3d Printing 
+	</h2>
+	<div id="buy-phone"  class="only-mobile border bottom clearfix">
+		{% assign product = collections[settings.featured_product].products.first %}
+		{% assign buy_phone = true %}
+		{% include 'buy' %}
+	</div>
+	
+	{% if settings.home_page != blank %}
+	<!--START PRODUCT FEATURES-->
+	<section id="product-features">
+		{{ pages[settings.home_page].content }}
+	</section>
+	{% endif %}
+	{% include 'latest-posts' %}
+	<br><br>
+</div>
+
+
+
+
+<!--START SIDEBAR-->
+		<aside class="five columns offset-by-one nomobile">
+			{% if template == 'index' %}
+				<!--START STICKY-->
+				<div>
+					<!--START BUY-->
+					<section id="buy" class="clearfix">
+						{% assign buy_phone = false %}
+						{% include 'buy' %}
+					</section>
+					<!--END BUY-->
+				</div>
+				<!--END STICKY-->
+				{% include 'social-sharing' %}
+          
+				{% if settings.show_kickstarter_info == true %}
+				<!-- START KICKSTARTER-->
+				<section id="kickstarter" class="border bottom">
+					<h3>{{ settings.kickstarter_backers }}<span>Backers</span></h3>
+					<h3>{{ settings.kickstarter_pledged }}<span>Pledged of {{ settings.kickstarter_goal }} Goal</span></h3>
+				</section>
+				<!-- END KICKSTARTER-->
+				{% endif %}
+          
+				{% if true == false%}
+					{% include 'email-alerts' %}
+				{% endif %} 
+				
+				{% if settings.featured_product and settings.featured_product != '' and collections[settings.featured_product].handle == settings.featured_product and collections[settings.featured_product].products_count > 1 %}
+					<!-- START YOU MIGHT ALSO LIKE-->
+					<section id="you-might-also-like" class="thin-border top">
+						<h3>{{ settings.text_addtional_products_sidebar }}</h3>
+                         {% for product in collections[settings.featured_product].products offset: 1 %}	
+							<article class="five colums clearfix product {% unless forloop.last %}border bottom{% endunless %}">
+								<div class="two colums alpha">
+								  <img src="{{ product.featured_image | product_img_url: "small" }}" alt="{{ image.alt | escape }}" />			
+								</div>
+								<div class="three columns omega info">
+									<h4>
+										{{ product.title }} 
+										<span class="block price">
+											{% if product.compare_at_price > product.price %} 
+											<del class="block">{{ product.compare_at_price | money }}</del> 
+											<span class="block compare-at-price" id="price-{{ product.id }}">{{ product.price | money }}</span>
+											{% else %}
+											<span class="price" id="price-{{ product.id }}">{{ product.price | money }}</span>
+											{% endif %}
+										</span>
+									</h4>
+									<a href="{{ product.url }}" class="button secondary small">View product</a>
+								</div>
+							</article>
+						{% endfor %}
+					</section>
+					<!-- END YOU MIGHT ALSO LIKE-->
+				{% endif %}
+          
+				{% if blogs[settings.featured_blog].articles.size > 0 and false %}
+					{% include 'latest-posts' %}
+				{% endif %}
+          
+				{% if blog.all_tags != blank %}
+				<!-- START TAGS -->
+				<section id="tags" class="thin-border top">
+					<h3>Tags</h3>
+					<ul>
+						{% for tag in blog.all_tags %}
+						<li><a href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a></li>
+						{% endfor %}
+					</ul>
+				</section>
+				<!-- END TAGS -->
+				{% endif %}
+          
+			{% endif %}
+		</aside>
+		<!--END ASIDE-->
+
+
+{% include 'triad' %}
+
+<script>
+// $(document).ready(function(){
+// 	$("#header-animate").addClass("animated fadeInDown")
+
+// })
+</script>
+

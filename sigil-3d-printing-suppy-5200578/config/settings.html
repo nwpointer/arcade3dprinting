@@ -1,0 +1,348 @@
+<fieldset>
+	<legend>Featured product</legend>
+	<table>
+		<tr>
+			<td>
+				<label for="featured_product">Featured product collection</label><small>The first product in this collection will be featured</small>
+			</td>
+			<td>
+				<select class="collection" name="featured_product" />
+			</td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Header</legend>
+	<h3>Logo</h3>
+	<table>
+		 <tr>
+		     <th><label for="use_logo">Use uploaded Logo?</label></th>
+		     <td><input type="checkbox" id="use_logo" name="use_logo" /></td>
+		 </tr>
+		<tr>
+			<th><label for="logo">Logo<br /><small>Max Height: 280px, Max Width: 500px, Format: PNG</small></label></th>
+			<td><input type="file" id="logo" name="logo.png" data-max-height="280" data-max-width="500" /></td>
+		</tr>
+	</table>
+	<h3>Tagline</h3>
+    <table>
+		<tr>
+			<th><label for="store_description">Store description (top right)</label></th>
+			<td><textarea rows="40" type="text" id="store_description" name="store_description"  /></td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Sidebar</legend>
+
+	<h3>Featured product section</h3>
+	<table>
+
+		<tr>
+		  <th><label for="product_thumbnail">Product image size</label></th>
+		  <td>
+		    <select name="product_thumbnail" id="product_thumbnail">
+		      <option value="full" selected="selected">Full width</option>
+		      <option value="160">160px</option>
+		      <option value="240">240px</option>
+		    </select>
+		  </td>
+		</tr>
+		<tr>
+			<td><label for="brief_product_description">Brief product description</label><small>Appears below the product image</small></td>
+			<td>
+				<textarea rows="4" cols="20" id="brief_product_description" name="brief_product_description" class="textarea" value=""/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="featured_blog">Featured blog</label>
+			</td>
+			<td>
+				<select class="blog" name="featured_blog" />
+			</td>
+		</tr>
+
+	</table>
+
+	<h3>Social media buttons</h3>
+	<table>
+		<tr>
+			<th><label for="facebook_page_url">Facebook App ID</label></th>
+			<td><input type="text" name="facebook_app_id" id="facebook_app_id" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="facebook_page_url">Facebook Page URL</label></th>
+			<td><input type="text" name="facebook_page_url" id="facebook_page_url" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="pinterest_page_url">Pinterest Page URL</label></th>
+			<td><input type="text" name="pinterest_page_url" id="pinterest_page_url" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="twitter_username">Twitter Username Name</label></th>
+			<td><input type="text" name="twitter_username" id="twitter_username" /></td>
+		</tr>
+	</table>
+
+	<h3>Email Alerts</h3>
+	<p><em>You can use Mailchimp or Shopify to handle Email Alerts sign ups. By default, the theme uses Shopify (whenever a user signs up a tagged customer account is created). If you want to use Mailchimp instead, enter your Mailchimp Form Action URL below:</em></p>
+	<table>  
+	  <tr>
+	    <th><label for="mailchimp_form_action">MailChimp Form Action URL <a target="_blank" href="http://support.shopify.com/customer/portal/articles/640278">( ? )</a></label></th>
+	    <td><input type="text" id="mailchimp_form_action" name="mailchimp_form_action" class="long" /></td>
+	  </tr>
+	</table>
+
+	<h3>Funding info shown in the sidebar</h3>
+	<table>
+		<tr>
+	      <th><label for="show_kickstarter_info">Show Kickstarter Funding Info?</label></th>
+	      <td><input type="checkbox" id="show_kickstarter_info" name="show_kickstarter_info" /></td>
+	    </tr>
+		<tr>
+			<th><label for="kickstarter_backers">Number of Backers</label></th>
+			<td><input type="text" name="kickstarter_backers" id="kickstarter_backers" /></td>
+		</tr>
+		<tr>
+			<th><label for="kickstarter_pledged">Amount Raised</label></th>
+			<td><input type="text" name="kickstarter_pledged" id="kickstarter_pledged" /></td>
+		</tr>
+	</table>
+
+</fieldset>
+
+<fieldset>
+	<legend>Footer</legend>
+	<h3>About Us</h3>
+	<table>
+		<tr>
+			<th><label for="about_body">Page</label></th>
+			<td><select class="page" name="about_body" /></td>
+		</tr>
+	</table>
+	<h3>Contact Details</h3>
+	<table>
+		<tr>
+			<th><label for="address_line_1">Address Line 1</label></th>
+			<td><input type="text" id="address_line_1" name="address_line_1" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="address_line_2">Address Line 2</label></th>
+				<td><input type="text" id="address_line_2" name="address_line_2" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="address_town_city">Town/City</label></th>
+			<td><input type="text" id="address_town_city" name="address_town_city" class="long" /></td>
+		</tr>
+		<tr>
+			<th><label for="address_zip">Zip/Post Code</label></th>
+			<td><input type="text" name="address_zip" id="address_zip" /></td>
+		</tr>
+		<tr>
+			<th><label for="address_email">Email Address</label></th>
+			<td><input type="text" name="address_email" id="address_email" /></td>
+		</tr>
+	</table>
+	<h3>Payment Methods</h3>
+	<table>
+		<tr>
+	      <th><label for="payment_methods">Display:</label></th>
+	      <td>
+	        <input type="checkbox" id="accept_visa" name="accept_visa" value="1" /> Visa
+	        <input type="checkbox" id="accept_mastercard" name="accept_mastercard" value="1" /> Mastercard
+	        <input type="checkbox" id="accept_amex" name="accept_amex" value="1" /> American Express
+	        <input type="checkbox" id="accept_cirrus" name="accept_cirrus" value="1" /> Cirrus
+	        <input type="checkbox" id="accept_delta" name="accept_delta" value="1" /> Delta
+	        <input type="checkbox" id="accept_discover" name="accept_discover" value="1" /> Discover
+	        <input type="checkbox" id="accept_westernunion" name="accept_westernunion" value="1" /> Western Union
+	        <input type="checkbox" id="accept_paypal" name="accept_paypal" value="1" /> PayPal
+	      </td>
+	    </tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Frontpage</legend>
+	<table>
+		<tr>
+			<th><label for="video_embed_code">Video Embed Code <a target="_blank" href="http://support.shopify.com/customer/portal/articles/75360-how-do-i-embed-a-video-on-my-store-">( ? )</a> <br /><small>Max Width: 580px</small></label></th>
+			<td><textarea name="video_embed_code" id="video_embed_code" rows="5" cols="48"></textarea></td>
+		</tr>
+	</table>
+
+	<h3>Content for the homepage</h3>
+	<table>
+		<tr>
+			<th><label for="home_page">Homepage content</label></th>
+			<td><select class="page" name="home_page" /></td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Customer Accounts</legend>
+	<table>
+		<tr>
+			<th><label for="customer_account_link_text">Customer Account Link Text</label></th>
+			<td><input type="text" name="customer_account_link_text" id="customer_account_link_text" /></td>
+		</tr>
+		<tr>
+			<th><label for="customer_logout_link_text">Customer Account Logout Link Text</label></th>
+			<td><input type="text" name="customer_logout_link_text" id="customer_logout_link_text" /></td>
+		</tr>
+		<tr>
+			<th><label for="customer_login_link_text">Customer Account Login Link Text</label></th>
+			<td><input type="text" name="customer_login_link_text" id="customer_login_link_text" /></td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Translations</legend>
+	<table>		
+		<tr>
+			<th><label for="text_addtocart">"Add to cart" text</label></th>
+			<td><input type="text" id="text_addtocart" name="text_addtocart" class="text" value="Add to cart"/></td>
+		</tr>
+		<tr>
+			<th><label for="text_addtional_products_sidebar">Additional products in sidebar</label></th>
+			<td><input type="text" id="text_addtional_products_sidebar" name="text_addtional_products_sidebar" class="text" value="More products"/></td>
+		</tr>
+
+		<tr>
+			<th><label for="text_footer_firstheading">First heading in the footer</label></th>
+			<td><input type="text" id="text_footer_firstheading" name="text_footer_firstheading" class="text" value="About Us"/></td>
+		</tr>
+		<tr>
+			<th><label for="text_footer_secondheading">Second heading in the footer</label></th>
+			<td><input type="text" id="text_footer_secondheading" name="text_footer_secondheading" class="text" value="Contact Us"/></td>
+		</tr>
+		<tr>
+			<th><label for="text_footer_thirdheading">Third heading in the footer</label></th>
+			<td><input type="text" id="text_footer_thirdheading" name="text_footer_thirdheading" class="text" value="Newsletter"/></td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Theme Aesthetics</legend>
+	<h3>Background</h3>
+	<table>
+	    <tr>
+	      <th><label for="use_background_image">Use uploaded background image?</label></th>
+	      <td><input type="checkbox" id="use_background_image" name="use_background_image" /></td>
+	    </tr>
+		<tr>
+			<th><label for="background_image">Background image<br /><small>Format: JPG</small></label></th>
+			<td><input type="file" id="background_image" name="background_image.jpg" /></td>
+		</tr>
+	</table>
+
+	<h3>Colors</h3>
+	<table>
+		<tr>
+			<th><label for="background_color">Background</label></th>
+			<td><input name="background_color" class="color" type="text" value="#ffffff" /></td>
+		</tr>
+		<tr>
+			<th><label for="accent_color">Links</label></th>
+			<td><input name="accent_color" class="color" type="text" value="#75ca37" /></td>
+		</tr>
+		<tr>
+			<th><label for="heading_color">Headings</label></th>
+			<td><input name="heading_color" class="color" type="text" value="#75ca37" /></td>
+		</tr>
+		<tr>
+			<th><label for="header_color">Top nav background</label></th>
+			<td><input name="header_color" class="color" type="text" value="#34322f" /></td>
+		</tr>
+		<tr>
+			<th><label for="text_color">Text</label></th>
+			<td><input name="text_color" class="color" type="text" value="#666666" /></td>
+		</tr>
+		<tr>
+			<th><label for="light_text_color">Light Text</label></th>
+			<td><input name="light_text_color" class="color" type="text" value="#999999" /></td>
+		</tr>
+		<tr>
+			<th><label for="button_text_color">Button text</label></th>
+			<td><input name="button_text_color" class="color" type="text" value="#ffffff" /></td>
+		</tr>
+		<tr>
+			<th><label for="button_bg_color">Button color</label></th>
+			<td><input name="button_bg_color" class="color" type="text" value="#ee5c4e" /></td>
+		</tr>
+		<tr>
+			<th><label for="border_color">Borders</label></th>
+			<td><input name="border_color" class="color" type="text" value="#e8e8e8" /></td>
+		</tr>
+	</table>
+	<h3>Fonts</h3>
+	<table>
+		<tr>
+			<th><label for="header_font">Header</label></th>
+			<td>
+				<select name="header_font" id="header_font">
+          <optgroup label="Sans-serif">
+            <option value="'Open Sans', sans-serif" selected="selected">Open Sans</option>
+            <option value="'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica/Arial</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+          </optgroup>
+        </select>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="body_font">Body</label></th>
+			<td>
+				<select name="body_font" id="body_font">
+          <optgroup label="Sans-serif">
+            <option value="'Helvetica Neue', Helvetica, Arial, sans-serif" selected="selected">Helvetica/Arial</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+          </optgroup>
+        </select>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Misc. Options</legend>
+	<table>
+		<tr>
+			<th><label for="favicon">Favicon<br /><small>Height: 32px, Width: 32px, Format: ICO</small></label></th>
+			<td>
+			   <input type="file" id="logo" name="favicon.png" data-max-width="16" data-max-height="16" />
+			 </td>
+		</tr>
+
+		<tr>
+		    <td>
+		       This collection will be displayed if a customer's cart is empty or a search has yielded no results
+		      <select name="featured_products" id="featured_products" class="collection" />
+		    </td>
+		  </tr>
+		<tr>
+			<th><label for="apple_touch_icon">Apple Touch Icon<br /><small>Height: 57px, Width: 57px, Format: PNG</small></label></th>
+			<td><input type="file" id="apple_touch_icon" name="apple-touch-icon.png" data-max-width="57" data-max-height="57"   /></td>
+		</tr>
+		<tr>
+			<th><label for="apple_touch_icon_72">Apple Touch Icon <br /><small>Height: 72px, Width: 72px, Format: PNG</small></label></th>
+			<td><input type="file" id="apple_touch_icon_72" name="apple-touch-icon-72x72.png" data-max-width="72" data-max-height="72" /></td>
+		</tr>
+		<tr>
+			<th><label for="apple_touch_icon_114">Apple Touch Icon<br /><small>Height: 114px, Width: 114px, Format: PNG</small></label></th>
+			<td><input type="file" id="apple_touch_icon_114" name="apple-touch-icon-114x114.png" data-max-width="114" data-max-height="114" /></td>
+		</tr>
+	</table>
+</fieldset>
+
+

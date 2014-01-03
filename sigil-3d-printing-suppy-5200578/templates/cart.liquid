@@ -1,0 +1,103 @@
+<div class="sixteen columns">
+	<h2>Cart</h2>
+</div>
+
+{% if cart.item_count > 0 %}
+<form action="/cart" method="post" name="cartform" class="clearfix">
+<!-- START CART-->
+<div id="cart">
+	<!--START HEADERS -->
+	<section id="cart-headers" class="thin-border bottom pb10 clearfix">
+
+		<div class="sixteen columns clearfix">
+			<div class="eight columns alpha">
+				<h3>Items</h3>
+			</div>
+			<div class="two columns offset-by-one">
+				<h3>Price</h3>	
+			</div>				
+			<div class="two columns qty">
+				<h3>Quantity</h3>
+			</div>
+			<div class="two columns omega">
+				<h3>Total</h3>
+			</div>
+		</div>
+	</section>	
+	<!--END HEADERS  -->
+	<!--START ITEMS -->
+	<section id="cart-items" class="clearfix">
+		{% for item in cart.items %}
+		<!-- START ROW-->
+		<div class="sixteen columns clearfix row border bottom pt20">
+			<div class="eight columns alpha item">
+				<div class="clearfix">
+					<img src="{{ item.product.images[0] | product_img_url: "small" }}" alt="{{ item.title | escape }}" />
+					<div class="info">
+						<h3>{{ item.title | escape }}</h3>
+						<p class="summary">{{ item.product.description | strip_html | truncatewords: 25 }}</p>
+	                    <p> {% include 'product_customizer_cart' %} </p>
+						<div class="phone">
+							<p class="price">{{ item.price | money }}</p>
+							<p class="qty">Qty: {{ item.quantity }}</p>
+							<a href="/cart/change/{{ item.id }}?quantity=0" class="remove"><span>Remove</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="two columns offset-by-one price">
+				{{ item.price | money }}
+			</div>
+			<div class="two columns qty">
+				<input type="text" class="quantity-field " name="updates[{{ item.id }}]" id="updates_{{ item.id }}" value="{{ item.quantity }}" />
+			</div>
+			<div class="two columns omega total">
+				{{ item.line_price | money }}
+			</div>
+			<div class="one column remove">
+				<a href="/cart/change/{{ item.id }}?quantity=0">&#10005;</a>
+			</div>
+		</div>
+		<!--END ROW-->
+		{% endfor %}
+	</section>
+	<!--END ITEMS -->
+	<!-- START CHECKOUT-->
+	<section id="checkout">
+		<div class="sixteen columns clearfix">
+			<div class="eight columns alpha">
+				<h4>Special Instructions</h4>
+				<p>Is there anything you want to tell us about your order?</p>
+				<textarea id="note" name="note"></textarea>
+			</div>
+			<div class="five columns offset-by-three omega clearfix">
+				<h3 class="total"><span class="phone">Total:</span> {{ cart.total_price | money }}</h3>
+				<div id="actions" class="clearfix">
+					<div class="two columns alpha">
+						<input type="submit" value="Update" name="update" class="button secondary desktop" />
+					</div>
+					<div class="three columns omega">
+						<input type="submit" value="Checkout" name="checkout" class="button primary" />
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+	<!-- END CHECKOUT-->
+</div>
+<!-- END CART-->
+</form>
+{% else %}
+	<div class="sixteen columns thin-border top">
+		<p>Your shopping cart is empty. <a href="/">Continue Shopping...</a></p>
+	</div>
+{% endif %}
+
+{% if cart.item_count < 1 and settings.featured_products != "" %}
+<div class="empty-featured">
+<h3>Featured Items</h3>
+	{% for product in collections.[settings.featured_products].products limit: 4 %}
+  		{% include 'product-grid' with 'three-per-row' %}
+	{% endfor %}
+</div>
+{% endif %}

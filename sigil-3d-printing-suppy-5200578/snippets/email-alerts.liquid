@@ -1,0 +1,30 @@
+<!-- START EMAIL ALERTS-->
+<section id="email-alerts" {% unless template == 'index' %}class="blog{% if blogs.news.articles.size == 1 %} top{% endif %}"{% endunless %}>
+	<h3>{{ settings.text_footer_thirdheading }}</h3>
+	{% if settings.mailchimp_form_action.size > 0 %}
+	<form action="{{ settings.mailchimp_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+	 	<input type="email" placeholder="Your Email Address" name="EMAIL" id="email-input" />
+	 	<input type="submit" value="Subscribe" class="button secondary" id="email-submit" />
+	</form>
+	{% else %}
+		{% form 'customer' %}        
+		{% if form.posted_successfully? %}
+			<p class="success"><em>Thank you for signing up!</em></p>
+		{% endif %}
+		{% if form.errors %}
+			<div class="error">
+				<p>Please correct these errors:</p>
+				<p>{% for field in form.errors %}
+					<em class="error">{{ field | capitalize }} {{ form.errors.messages[field] }}</em>{% unless forloop.last %}<br>{% endunless %}
+				{% endfor %}</p>
+			</div>
+		{% endif %}       
+			<input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,email-alerts" />
+			<input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Subscriber" />
+			<input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="Email Alerts" />
+			<input type="email" placeholder="your@email.com" name="contact[email]" id="email-input" class="required email" />
+			<input type="submit" value="Subscribe" class="button secondary" name="subscribe" id="email-submit" />
+		{% endform %} 
+	{% endif %}
+</section>
+<!-- END EMAIL ALERTS-->

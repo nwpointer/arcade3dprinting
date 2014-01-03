@@ -1,0 +1,77 @@
+
+
+{% assign featuredproduct = collections[settings.featured_product].products.first %}
+
+{% if featuredproduct == blank %}
+
+<h3>You need to select a collection</h3>
+<span class="sb20 block">Go to your <a href="/admin/themes/{{ theme.id }}/settings">Theme Settings</a> and under the "Sidebar" theme settings select which collection you want to feature.</span>
+{% else %}
+
+	{% if featuredproduct.title == blank %}
+	<h3>You need to select a product</h3>
+	<span class="sb20 block">Go to your <a href="/admin/themes/{{ theme.id }}/settings">Theme Settings</a> and pick which product you want to feature in the sidebar.</span>
+	{% else %}
+	<h2>DAILY DEAL</h2>
+	<h3>{{ featuredproduct.title }}</h3>
+
+	{% assign image = featuredproduct.featured_image %}
+	<a class="fancybox" href="{{ image.src | product_img_url: '1024x1024' }}">
+		{% case settings.product_thumbnail %}
+		{% when '160' %}
+    <img src="{{ image.src | product_img_url: 'compact' }}" alt="{{ image.alt | escape }}" />
+		{% when '240' %}
+    <img src="{{ image.src | product_img_url: 'medium' }}"	alt="{{ image.alt | escape }}" />
+		{% when 'full' %}
+    <img src="{{ image.src | product_img_url: 'large' }}"	 alt="{{ image.alt | escape }}" />
+		{% endcase %}
+	</a>
+
+	{% if settings.brief_product_description != blank %}
+		<div class="product-description">
+
+		{{ settings.brief_product_description }}
+		</div>
+	{% endif %}
+
+	<form method="post" action="/cart/add" class="st10 quickAdd">
+		{% if featuredproduct.variants.size > 1 %}
+			<!-- START VARIANTS -->
+			<select name="id" {% if buy_phone == true %}id="product-select"{% else %}id="product-select-phone"{% endif %}>
+			{% for variant in featuredproduct.variants %}
+				{% if variant.available %}
+				<option value="{{ variant.id }}">{{ variant.title | escape }} ({{ variant.price | money }})</option>
+				{% else %}
+				<option value="{{ variant.id }}" disabled="disabled">{{ variant.title | escape }} ({{ variant.price | money }}) - 	SOLD OUT</option>
+				{% endif %}
+			{% endfor %}
+			</select>
+			<!-- END VARIANTS -->
+		{% else %}
+			{% for variant in featuredproduct.variants %}
+				{% if variant.available %}
+					{% assign variant = featuredproduct.variants.first %}
+					<input type="hidden" name="id" value="{{ variant.id }}" />
+				{% else %}
+					<p><i>Sorry this product has sold out!<i></p>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		<!-- START ADD TO CART -->
+		{% if featuredproduct.available %}
+			<span class="featured-product price"><span>{{ featuredproduct.price | money }}</span>{% if featuredproduct.compare_at_price_max > featuredproduct.price %} <del>{{ featuredproduct.compare_at_price | money }}</del>{% endif %}</span>
+	
+			<input type="submit" value="{{ settings.text_addtocart }}" class=" add-to-cart addtocart button primary">
+		{% else %}
+			<h3 class="featured-product price sold-out"><span>Sold Out</span></h3>
+			<input type="submit" value="{{ settings.text_addtocart }}" class="featured-product add-to-cart button primary disabled" disabled="disabled	">
+		{% endif %}
+		<!-- END ADD TO CART -->
+	</form>
+
+{% endif %} <!-- checks to see if there is a product title -->
+{% endif %} <!-- if featured product theme setting is filled out -->
+
+
+
+

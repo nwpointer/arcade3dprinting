@@ -1,0 +1,75 @@
+{% paginate blog.articles by 10 %}
+<section id="posts" class="blog-feed" >
+	
+	<ul id="catagories" class="sixteen columns nomobile">
+		<li>
+			{{'cube.png' | asset_url | img_tag }}
+		</li>
+		<li>Articles by Topic:</li>
+		{% for link in linklists.blogs.links %}
+				{% assign blog_handle = {{link.title}} %}
+				{% if link.title == blog.handle %}
+					{% assign id = 'id="current-blog"'%}
+				{% endif %}
+					<li><a {{id}} href="{{link.url}}">{{blog_handle}}</a></li>
+				{% assign id = ''%}
+		{% endfor %}
+	</ul>
+	
+		<div class="article-wrapper ten columns">
+			{% for article in blog.articles %}
+			<!-- START POST-->
+			<article>
+				<span class="date nomobile">
+					{{ article.published_at | date: "%b %d </br> <span>%Y</span>" }}
+				</span>
+				<h3><a href="{{ article.url }}">{{ article.title | escape }}</a>
+				</h3>
+				<div class="wysiwyg">
+					{% if article.excerpt == blank %}
+						{{ article.content | split: '</p>' | first }}
+					{% else %}
+						{{ article.excerpt }}
+					{% endif %}
+				</div>
+				<div style="padding-top: 1em;">
+					<a href="{{ article.url | append: '#comments' }}" class="nomobile">
+						<div class="comment_count">{{ article.comments_count }}
+			 			</div>
+					</a>
+			 		<a href="{{ article.url }}" class="more">Continue Reading &raquo;</a>
+				</div>
+		 		<br><!-- <br> -->
+		 		<!-- <hr style="margin-top:-.25em"> -->
+			</article>
+			<!-- END POST-->
+			{% endfor %}	
+		</div>
+		<aside class="four columns offset-by-one nomobile">
+			<h3 class="border bottom">Popular Articles</h3>
+			<!-- loop through all blogs via link list -->
+			<!-- capture their articles in array -->
+			<!-- loop through cycle and get one with most comments, second and third -->
+			<!-- print article date, title and 50 words & image -->
+			{% for article in blogs.news.articles %}
+          		{% if article.tags contains 'popular' %}
+          			<div class="border bottom article">
+          				<a href="{{ article.url }}">
+	          			<h5 >{{ article.published_at | date: "%b %d, %Y" }}</h5>
+	          			<h6>{{ article.title }}</h6>
+	          			
+	          			<p >{{ article.content | strip_html | truncatewords: 10}} read more &raquo;</p>
+	          			</a>
+          			</div>
+          		{% endif %}
+          	{% endfor %}
+		</aside>
+	
+	
+	{% if paginate.pages > 1 %}
+	<div id="paging">
+		{{ paginate | default_pagination }}
+	</div>
+	{% endif %}
+</section>
+{% endpaginate %}

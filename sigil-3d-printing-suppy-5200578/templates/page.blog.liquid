@@ -1,0 +1,39 @@
+
+<ul id="catagories">
+{% for link in linklists.blogs.links %}
+	<li><a href="{{link.url}}">{{link.title}}</a></li>
+{% endfor %}
+</ul>
+
+{% for link in linklists.blogs.links %}
+	{% assign blog_handle = {{link.title}} %}
+	<section id="posts">
+
+	{% paginate blogs[blog_handle].articles by 1 %}
+	{% for article in blogs[blog_handle].articles %}
+
+	<!-- START POST-->
+	<article>
+		<h3 class="border bottom"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+		<h4 class="thin-border bottom">Posted by {{ article.author }} on {{ article.published_at | date: "%B %d, %Y" }}. <a href="{{ article.url }}#comments">{{ article.comments_count }} {{ article.comments_count | pluralize: 'Comment', 'Comments' }}</a></h4>
+		<div class="wysiwyg">
+			{% if article.excerpt == blank %}
+				{{ article.content | truncatewords: 150 }}
+			{% else %}
+				{{ article.excerpt }}
+			{% endif %}
+		</div>
+ 		<a href="{{ article.url }}" class="more">Continue Reading &raquo;</a>
+	</article>
+	
+	<!-- END POST-->
+	{% endfor %}
+</section>
+{% if paginate.pages > 1 %}
+	<div id="paging">
+		{{ paginate | default_pagination }}
+	</div>
+	{% endif %}
+	{% endpaginate %}
+
+{% endfor %}

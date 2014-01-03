@@ -1,0 +1,33 @@
+<script>
+	$(window).bind('scroll',function(e){
+    parallaxScroll();
+});
+ 
+function parallaxScroll(){
+    var scrolled = $(window).scrollTop();
+    $('#head-cont').css('top',(0-(scrolled*-.3))+'px');
+    $('#head-title').css('top',(0+(scrolled*.37))+'px');
+    $('#head-title').css('opacity',(1.0-(scrolled/150)));
+
+}
+</script>
+
+<style>
+	
+	#head-cont{
+		height: 25em;
+	}
+	#para-wrap{
+		height: 18em;
+		overflow: hidden;
+		margin-top: -1em;
+	}
+</style>
+
+<div id="para-wrap">
+	<div class="head" id="head-cont">
+		<div class="container" id="head-title">
+			<h1>Let's Talk Shop:</h1>
+		</div>
+	</div>
+</div>

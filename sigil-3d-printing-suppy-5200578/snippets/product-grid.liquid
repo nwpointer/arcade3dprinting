@@ -1,0 +1,36 @@
+{% comment %}If no value is passed to the snippet, we will set the snippet variable to a sensible default.{% endcomment %}
+{% if product-grid-item == '' %}{% assign product-grid-item = 'three-per-row' %}{% endif %}
+
+{% comment %}Is this product on sale?{% endcomment %}
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+<div class="four columns {{ product-grid-item }}{% unless product.available %} sold-out{% endunless %}{% if on_sale %} on-sale{% endif %} sb40">
+
+  <div class="product-block product-image tc">  
+    <a href="{{ product.url | within: collection }}">
+      <div class="block">
+      <img src="{{ product.featured_image.src | product_img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" />
+      </div>
+    </a>
+  </div><!-- .prod-image-wrap -->
+  
+  
+  <div class="prod-caption">
+      <a href="{{ product.url | within: collection }}">
+        {{ product.title }}
+      </a>
+      <span class="prod-price">
+        {% if product.price_varies %}From{% endif %}
+        {{ product.price | money }}
+        {% if on_sale %}
+        <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+        {% endif %}
+      </span>
+  </div><!-- .prod-caption -->
+  
+</div>
+
+{% cycle 'last': '', '', '', '<br class="clear" />' %}

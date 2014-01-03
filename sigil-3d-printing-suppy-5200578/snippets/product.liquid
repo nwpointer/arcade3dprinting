@@ -1,0 +1,13 @@
+<!-- START PRODUCT {{ forloop.index }} -->
+<li {% cycle '', '', ' class="last"' %}>
+	<a href="{{ product.url | within: collection }}">
+		{% for image in product.images %}
+			{% if forloop.first %}
+				<img src="{{ image | product_img_url: "medium" }}" alt="{{ product.title | escape }}" />
+			{% endif %}
+		{% endfor %}
+	</a>
+	<h2><a href="{{ product.url | within: collection }}">{{ product.title | escape | truncate: 25 }}</a></h2>
+	<p>{{ product.price | money }}{% if product.compare_at_price_max > product.price %} <del>{{ product.compare_at_price_max | money }}</del>{% endif %}</p>
+</li>
+<!-- END PRODUCT {{ forloop.index }} -->

@@ -1,0 +1,54 @@
+<div class="container">
+  {% paginate search.results by 5 %}
+<h2>Search</h2>
+<div class="search-form">
+<form action="/search" method="get" class="search-form" role="search">
+  <p>
+    <input type="text" name="q" value="{{ search.terms | escape }}" />
+    <input type="submit" value="Search store" class="button" />
+  </p>
+</form>
+</div>
+  
+  {% if search.performed %}
+      {% if search.results_count == 0 %}  
+      <p>Your search for "{{ search.terms }}" did not yield any results.</p>              
+    {% else %}  
+      {% for item in search.results %}      
+        <div class="search-result clearfix">
+          {% if item.featured_image %}
+          <div class="search-product-thumb four columns">
+            <a href="{{ item.url }}" title="{{ item.title | escape }}">
+              {{ item.featured_image.src | product_img_url: 'large' | img_tag: item.featured_image.alt }}
+            </a>
+          </div>
+          <div class="result-text twelve columns">
+          <h3>{{ item.title | link_to: item.url }}</h3>
+            <div class="search-text">{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}</div>
+          {% else %}
+          <div>{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}</div>
+          {% endif %}
+            <div class="search-price"><strong>{{ item.price_min | money }}</strong></div>
+          </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+  {% endif %}
+  
+  {% if paginate.pages > 1 %}
+<div class="pagination">
+  {{ paginate | default_pagination }}
+</div>
+{% endif %}
+
+{% endpaginate %}   
+  {% if search.results_count == 0 and settings.featured_products != "" %}
+<div class="empty-featured">
+<h3>Featured Items</h3>
+	{% for product in collections.[settings.featured_products].products limit: 4 %}
+  		{% include 'product-grid' with 'three-per-row' %}
+	{% endfor %}
+</div>
+{% endif %}
+</div>
+

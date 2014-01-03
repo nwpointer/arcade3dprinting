@@ -1,0 +1,31 @@
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={% if settings.facebook_app_id == blank %}154732808021974{% else %}{{ settings.facebook_app_id }}{% endif%}";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- START SHARE-->
+<section id="share" class="clearfix">
+
+	<div class="facebook">
+		<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-width="10px" data-type="button"></div>
+	</div>
+	<div class="twitter">
+		<a href="https://twitter.com/share" class="twitter-share-button" {% if settings.twitter_username != blank %}data-via="{{ settings.twitter_username | remove: '@' }}"{% endif %}>Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+	<div class="pinterest" >
+
+		{% assign product = collections[settings.featured_product].products.first %}
+		{% if template == 'article' %}
+		<a href="http://pinterest.com/pin/create/button/?url={{ shop.url }}/{{ article.url}}&media={% if src == "" %}{{ 'logo.png' | asset_url }}{% else %}{{ src }}{% endif %}&description={{ article.title }}" class="pin-it-button" count-layout="none">Pin It</a>
+		{% else %}
+		<a href="http://pinterest.com/pin/create/button/?url={{ shop.url }}&media={{ product.featured_image | product_img_url: 'large' | split:'?' | first  }}&description={{ product.title | escape | replace:' ','%20' }}" class="pin-it-button" count-layout="none">Pin It</a>
+		{% endif %}
+		<script type="text/javascript" src="https://assets.pinterest.com/js/pinit.js"></script>
+	</div>
+	
+</section>
+<!-- END SHARE-->

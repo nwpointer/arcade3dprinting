@@ -1,0 +1,28 @@
+<div class="st40">
+{% paginate collection.products by 12 %}
+
+{% if collection.description.size > 0 %}
+<div class="sixteen columns">
+<div class="rte sb30">
+  {{ collection.description }}
+</div>
+</div>
+{% endif %}
+
+<div class="product-grid sb30 clearfix">
+{% for product in collection.products %}
+  {% include 'product-grid' with 'three-per-row' %}
+{% else %}
+<p>There are no products in this view.</p>
+{% endfor %}
+</div>
+
+{% if paginate.pages > 1 %}
+<div id="pagination" class="sb30">
+  {{ paginate | default_pagination }}
+</div>
+{% endif %}
+
+{% endpaginate %}
+</div>
+

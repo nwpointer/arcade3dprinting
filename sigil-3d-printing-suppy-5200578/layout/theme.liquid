@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'head' %}  
+  	{{ content_for_header }}
+</head>
+
+<body>
+	<div id="cart-animation" style="display:none">1</div>
+	<div id="fb-root"></div>
+
+
+
+	{% if linklists.main-menu.size > 0 %}
+	<!--START NAVBAR-->
+	<nav id="navbar">
+		<!-- START CONTAINER-->
+		<div class="container">
+			<!-- START NAVIGATION-->
+				<ul id="main-menu" class="drop">
+						<li id="main_logo">
+							{% if settings.use_logo == true %}
+							<a href="/" >
+								<img  class="" src="{{ 'logo.png'| asset_url }}" alt="{{ shop.name }}" height="40px">
+							</a>
+							{% else %}
+							<h1 class="">
+							<a href="/">{{ shop.name }}</a>
+							</h1>
+							{% endif %}
+						</li>
+						{% for link in linklists.main-menu.links %}
+							{% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
+							{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+							<li>
+								<a href="{{ link.url }}" {% if link.active %} class="active"{% endif %}>{{ link.title | escape }} <span class="pointer"></span></a>
+								<ul class="drop-menu">
+									{% for l in linklists[child_list_handle].links %}
+									<li><a href="{{ l.url }}">{{ l.title }}</a></li>
+									{% endfor %}
+								</ul>
+							</li>
+							{% else %}
+							<li>
+								<a href="{{ link.url }}" {% if link.active %} class="active"{% endif %}>{{ link.title | escape }}</a>
+							</li>
+							{% endif %}
+						{% endfor %}
+						{% include 'customer-links' %}
+				</ul>
+				<!-- ALTERNATE MENU FOR SMALLER SCREENS-->
+				<ul id="main-menu-phone" class="drop">
+					<li class="no-mb"><a href="#">Menu <span class="pointer"></span></a>
+						<ul>
+							{% for link in linklists.mobile.links %}
+							<li><a href="{{ link.url }}" {% if link.active %} class="active"{% endif %}>{{ link.title | 	escape 	}}</a></li>
+							{% endfor %}
+							{% include 'customer-links' %}
+						</ul>
+					</li>
+				</ul>
+				<!--ALTERNATE MENU FOR SMALLER SCREENS-->
+
+			<!-- END NAVIGATION-->
+			<!-- START MINI CART-->
+			<div id="mini-cart" >
+				<span class="cart-total-items ">
+					<a href="/pages/support">
+						<span id="service" class="nomobile">
+							<img src="http://cdn.shopify.com/s/files/1/0288/5168/files/customer_support.png?534" alt="">
+							Customer service
+						</span>
+					</a>
+					<a href="/cart">
+						<span id="cart-target" class="count">
+							{{ cart.item_count }}
+						</span>
+						<span class="nomobile">
+							{{ cart.item_count | pluralize: 'Item', 'Items' }} <span class="in-cart">in cart</span>
+						</span>
+					</a> 
+				</span>
+				<a href="/cart"><span class="checkout">Check out</span></a>
+			</div>
+			<!-- END MINI CART-->
+		</div>
+		<!-- END CONTAINER-->
+	</nav>
+	<!--END NAVBAR-->
+	{% endif %}
+
+
+
+
+
+	<!-- START CONTAINER-->
+	{% if template == 'index'%}
+		{% include 'hero' %}
+	{% endif %}
+
+	{% if template =='blog'%}
+		{% include 'blog_banner'%}
+	{% endif %}
+
+	<div class="container clearfix main">
+		<!--START MAIN-->
+			{{ content_for_layout }}
+		<!--END MAIN-->
+	</div>
+
+	<!-- END CONTAINER-->
+
+
+
+
+
+	
+	<!-- START FOOTER -->
+	<footer class="border top">
+		<!-- START CONTAINER-->
+		<div class="container">
+			<div class="five columns">
+				<h3>{{ settings.text_footer_firstheading }}</h3>
+				{% if settings.about_body == blank %}<p>You can pick which page to display here in your <a href="/admin/themes">Theme Settings.</a></p>{% else %}{{ pages[settings.about_body].content }}{% endif %}
+			</div>
+			<div class="four columns offset-by-one">
+				<h3>{{ settings.text_footer_secondheading }}</h3>
+				<address>
+					{% if settings.address_line_1 == blank %}
+						<p>Add your contact information to theme settings and it will appear here.</p>
+					{% else %}
+						{{ settings.address_line_1 }}<br>
+						{% if settings.address_line_2 != blank %}{{ settings.address_line_2 }}<br>{% endif %}
+						{% if settings.address_town_city != blank %}{{ settings.address_town_city }}<br>{% endif %}
+						{% if settings.address_zip != blank %}{{ settings.address_zip }}<br>{% endif %}
+						{% if settings.address_email != blank %}<a href="mailto:{{ settings.address_email }}">{{ settings.address_email }}</a>{% endif %}
+					{% endif %}
+				</address>
+			</div>
+			<div class="five columns offset-by-one">
+				<h3>{{ settings.text_footer_thirdheading }}</h3>
+				{% if settings.mailchimp_form_action.size > 0 %}
+				<form action="{{ settings.mailchimp_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+				 	<input type="email" placeholder="Your Email Address" name="EMAIL" id="email-input" />
+				 	<input type="submit" value="Subscribe" class="button secondary" id="email-submit" />
+				</form>
+				{% else %}
+					<form id="email-alerts-footer" class="mini-contact-form" action="/contact" method="post">
+						<input type="hidden" value="customer" name="form_type"> 
+						<p class="success"><em>Thank you for signing up!</em></p>       
+						<input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,email-alerts" />
+						<input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Subscriber" />
+						<input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="Email Alerts" />
+						<input type="email" placeholder="Your Email Address" name="contact[email]" id="email-input" class="required email" />
+						<input type="submit" value="Subscribe" class="button secondary" name="subscribe" id="email-submit" />
+					</form>
+				{% endif %}
+			</div>
+		</div>
+		<!-- END CONTAINER-->
+		<!-- START CONTAINER-->
+		<div class="container">
+			<div class="sixteen columns">				
+			    <div id="payment-methods">
+	            	{% if settings.accept_visa %}<img src="{{ 'icon-cc-visa.gif' | asset_url }}" alt="Visa" />{% endif %}
+	            	{% if settings.accept_mastercard %}<img src="{{ 'icon-cc-mastercard.gif' | asset_url }}" alt="MasterCard" />{% endif %}
+	            	{% if settings.accept_amex %}<img src="{{ 'icon-cc-amex.gif' | asset_url }}" alt="Amex" />{% endif %}
+	            	{% if settings.accept_cirrus %}<img src="{{ 'icon-cc-cirrus.gif' | asset_url }}" alt="Cirrus" />{% endif %}
+	            	{% if settings.accept_delta %}<img src="{{ 'icon-cc-delta.gif' | asset_url }}" alt="Delta" />{% endif %}
+	            	{% if settings.accept_discover %}<img src="{{ 'icon-cc-discover.gif' | asset_url }}" alt="Discover" />{% endif %}
+	            	{% if settings.accept_westernunion %}<img src="{{ 'icon-cc-westernunion.gif' | asset_url }}" alt="Western Union" />{% endif %}
+	            	{% if settings.accept_paypal %}<img src="{{ 'icon-cc-paypal.gif' | asset_url }}" alt="PayPal" />{% endif %}
+	            </div>			
+				<p class="copyright tc">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. All rights reserved {% if settings.facebook_page_url != blank %} <span>&#124;</span> <a href="http://{{ settings.facebook_page_url | remove: 'http://' }}">Facebook</a> {% endif %}{% if settings.pinterest_page_url != blank %}  <span>&#124;</span> <a href="http://{{ settings.pinterest_page_url | remove: 'http://' }}">Pinterest</a> {% endif %}{% if settings.twitter_username != blank %} <span>&#124;</span> <a href="http://www.twitter.com/{{ settings.twitter_username | remove: '@' }}">Twitter</a> {% endif %}</p>
+			</div>
+		</div>
+		<!-- END CONTAINER--> 
+	</footer>
+
+	{% assign featuredproduct = collections[settings.featured_product].products.first %}
+
+	{% if template == 'index' %}
+		{% if settings.featured_product != blank %}
+
+			{% if product.available %}
+				{% if featuredproduct.variants.size > 1 %}
+				<script>
+				// <![CDATA[  
+				var selectCallback = function(variant, selector) {
+				  if (variant && variant.available == true) {
+				    // selected a valid variant
+				    jQuery('.add-to-cart').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-	cart button, and re-enable button
+				    jQuery('.featured-product.price').html(Shopify.formatMoney(variant.price, "{{shop.money_format }}"));  // update 	price field
+				  } else {
+				    // variant doesn't exist
+				    jQuery('.add-to-cart').addClass('disabled').attr('disabled', 'disabled');      // set add-to-cart button to 	unavailable class and disable button
+				    var message = variant ? "<span>Sold Out</span>" : "<span>Unavailable</span>";    
+				    jQuery('.featured-product.price').html(message); // update price-field message
+				  }
+				};
+				// initialize multi selector for product
+				jQuery(function() {
+				  new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback })	;
+				  new Shopify.OptionSelectors("product-select-phone", { product: {{ product | json }}, onVariantSelected: 	selectCallback });
+				  {% assign found_one_in_stock = false %}
+				  {% for variant in product.variants %}
+				  {% if variant.available and found_one_in_stock == false %}
+				    {% assign found_one_in_stock = true %}
+				    {% for option in product.options %}
+				    jQuery('#product-select-option-{{ forloop.index0 }}').val({{ variant.options[forloop.index0] | json }}).trigger('	change');
+					jQuery('#product-select-phone-option-{{ forloop.index0 }}').val({{ variant.options[forloop.index0] | json }}).	trigger('change');
+					{% endfor %}
+				  {% endif %}
+				{% endfor %}
+				});
+				// ]]>
+				</script>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+		<script>
+
+		$(document).ready(function() {
+
+			{% if settings.featured_product != blank %}
+			 // Sync the selects in the two buy elements on the page
+			 var set1 = 'product-select';
+			 var set2 = 'product-select-phone';
+			 $("select").on("change", function() {
+			  	var id = $(this).attr("id");
+			    if (id.indexOf(set2) !== -1) {
+			        var sync = id.replace(set2, set1);
+			    } else {
+			        var sync = id.replace(set1,set2);
+			    }
+			    $("#"+sync).val($(this).val());
+			});
+			{% endif %}
+
+			 // Responsive Video.
+			 $("#product-video").fitVids();
+
+		});
+		$(window).load(function(){
+			$('.my-sticky-element').waypoint('sticky', {
+				offset: -280,
+				handler: function(dir) {
+						$("#buy img").toggle()
+						$("#buy .product-description").toggle()
+						$(".my-sticky-element").toggleClass("animated bounceInDown pt20")
+				}
+			});
+		})
+		</script>
+
+
+	{% endif %}
+	{% unless template == 'index' %}
+	{% if settings.home_page != blank %}
+		<script>
+		var featuredContent = '{{ pages[settings.home_page].content | replace: "'","" | json }}';
+		</script>
+	{% endif %}
+	{% endunless %}
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% comment %}Re-using same code as collection pages, as it's essentially the same styles{% endcomment %}
+
+<div id="collections-listing">
+  {% paginate collections by 12 %}
+
+    {% if collections.size > 0 %}
+
+    <h2>Product Collections</h2>
+
+<div class="product-grid sb30 clearfix">
+{% for collection in collections %}
+
+<div class="four columns sb40">
+
+  <div class="product-block product-image tc">  
+    <a href="{{ collection.url  }}">
+      <div class="block">
+			{% if collection.image %}
+            	{{ collection.image.src | collection_img_url: 'medium' | img_tag: collection_title }}
+         	{% else %}
+            	{{ collection.products.first.featured_image | product_img_url: 'medium' | img_tag: collection_title }}
+        	{% endif %}
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="prod-caption">
+      <a href="{{ collection.url }}">
+        {{ collection.title }}
+      </a>
+     
+  </div>
+  <span class="prod-price">
+     {{ collection.all_products_count }} {{ collection.all_products_count | pluralize: 'item', 'items' }}
+  </span>
+</div>
+
+{% cycle 'last': '', '', '', '<br class="clear" />' %}
+  
+{% endfor %}
+</div>
+  
+  {% if paginate.pages > 1 %}
+  <div id="pagination" class="sb30">
+    {{ paginate | default_pagination }}
+  </div>
+  {% endif %}
+
+
+{% else %}
+     <p>No Collections found...</p>
+{% endif %}
+{% endpaginate %}
+</div>
